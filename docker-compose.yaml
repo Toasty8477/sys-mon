@@ -1,7 +1,7 @@
 services:
   sys-mon:
     container_name: sys-mon
-    image: ghcr.io/toasty8477/sys-mon
+    image: ghcr.io/toasty8477/sys-mon:0.1
     volumes:
       - /proc:/proc
     restart: unless-stopped

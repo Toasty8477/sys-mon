@@ -1,6 +1,6 @@
 FROM python:3.9.10-slim-bullseye
 
-COPY requirements.txt requirements.txt
+COPY src/requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .

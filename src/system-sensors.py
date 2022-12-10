@@ -7,7 +7,7 @@ import time
 
 # Read Config
 config = ConfigParser()
-config.read("config.ini")
+config.read("src/config.ini")
 broker_info = config['BROKER']
 sys_info = config['SYS']
 
@@ -53,6 +53,6 @@ while True:
 
 
     client.disconnect
-    print('disconnected')
+    print('Disconnected')
 
     time.sleep(60)

@@ -4,4 +4,10 @@ services:
     image: ghcr.io/toasty8477/sys-mon:latest
     volumes:
       - /proc:/proc
+    environment:
+      - BROKER_IP= # IP of your MQTT broker
+      - BROKER_PORT= # Port your MQTT broker is running on, defaults to 1883
+      - BROKER_UNAME= # Username for you broker
+      - BROKER_PASS= # Password for your broker
+      - SERVER_NAME= # What you want your server to be called
     restart: unless-stopped

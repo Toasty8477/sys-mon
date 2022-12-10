@@ -1,37 +1,35 @@
 from paho.mqtt import client as mqtt
 import random
 import psutil
-from configparser import ConfigParser
 import time
+import os
+import logging as log
 
 
-# Read Config
-config = ConfigParser()
-config.read("config.ini")
-broker_info = config['BROKER']
-sys_info = config['SYS']
 
 # Set up and connect to mqtt broker
-broker = broker_info["ip"]
-port = int(broker_info["port"])
+broker = '192.168.0.13' #os.getenv('BROKER_IP')
+port = int(os.getenv('BROKER_PORT', '1883'))
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
-username = broker_info["username"]
-password = broker_info["password"]
-name = sys_info["name"]
+username = 'mqtt'#os.getenv('BROKER_UNAME')
+password = 'password' #os.getenv('BROKER_PASS')
+name = 'thoth' #os.getenv('SERVER_NAME', 'Server_' + str(client_id))
 
 def connect():
     global client
     client = mqtt.Client(client_id)
-    client.on_connect = print('Connected!')
+    client.on_connect = log.info('Connected To Broker')
     client.connect(broker, port)
     return client
+
+log.basicConfig(format='%(levelname)s: %(message)s',level=log.INFO)
 
 while True:
 
     try:
         connect()
     except:
-        print('Something Went Wrong')
+        log.error('Could Not Connect To Broker')
 
 
     cpu_use = str(psutil.cpu_percent(interval=1))
@@ -47,12 +45,12 @@ while True:
         client.publish('homeassistant/sensor/{name}-cpu-temp/state'.format(name = name.lower()), payload = cpu_temp, qos = 0, retain = False)
         client.publish('homeassistant/sensor/{name}-mem-use/state'.format(name = name.lower()), payload = mem_use, qos = 0, retain = False)
         client.publish('homeassistant/sensor/{name}-disk-use/state'.format(name = name.lower()), payload = disk_use, qos = 0, retain = False)
-        print('Info was sent')
+        log.info('Info was sent')
     except:
-        print('Info was unable to be sent')
+        log.error('Info was unable to be sent')
 
 
     client.disconnect
-    print('Disconnected')
+    log.info('Disconnected From Broker')
 
     time.sleep(60)

@@ -5,4 +5,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 WORKDIR /src
-CMD [ "python3", "system-sensors.py"]
+CMD [ "python3", "-u", "system-sensors.py"]

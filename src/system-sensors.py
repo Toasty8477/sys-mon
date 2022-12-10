@@ -7,7 +7,7 @@ import time
 
 # Read Config
 config = ConfigParser()
-config.read("src/config.ini")
+config.read("config.ini")
 broker_info = config['BROKER']
 sys_info = config['SYS']
 

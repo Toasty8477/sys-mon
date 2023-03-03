@@ -11,9 +11,9 @@ import logging as log
 broker = '192.168.0.13' #os.getenv('BROKER_IP')
 port = int(os.getenv('BROKER_PORT', '1883'))
 client_id = f'python-mqtt-{random.randint(0, 1000)}'
-username = 'mqtt'#os.getenv('BROKER_UNAME')
-password = 'password' #os.getenv('BROKER_PASS')
-name = 'thoth' #os.getenv('SERVER_NAME', 'Server_' + str(client_id))
+username = os.getenv('BROKER_UNAME')
+password = os.getenv('BROKER_PASS')
+name = os.getenv('SERVER_NAME', 'Server_' + str(client_id))
 
 def connect():
     global client
